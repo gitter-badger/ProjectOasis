@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ProjectOasis</string>
+    <string name="logo">Logo</string>
+    <string name="app_description">
+        A social platform empowering environmental enthusiasts, authorities
+        NGOs, and for every interested river saviour !
+        \nView, contact, propose, share your thoughts,
+        ideas and propositions.
+        A place where ideas get real !</string>
+    <string name="activity_login_title">Enter your Credentials</string>
+    <string name="activity_login_email_error">Enter a valid email</string>
+    <string name="activity_login_password_error">Enter a valid password</string>
+    <string name="valid_password_description">This is the password description</string>
+</resources>
