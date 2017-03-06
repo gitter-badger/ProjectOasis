@@ -17,6 +17,9 @@
         <activity android:name=".UI.LoginActivity"
             android:theme="@style/AppTheme"
             android:parentActivityName=".UI.WelcomeActivity" />
+        <activity android:name=".UI.ForgotPasswordActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".UI.LoginActivity"/>
     </application>
 
 </manifest>

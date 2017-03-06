@@ -22,12 +22,12 @@ public class WelcomeActivity extends AppCompatActivity implements MyCommonUISetU
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
         setUpUI();
     }
 
     @Override
     public void setUpUI() {
+        setContentView(R.layout.activity_welcome);
         loginButton=(Button)findViewById(R.id.loginButton);
         signupButton=(Button)findViewById(R.id.signupButton);
         loginButton.setOnClickListener(this);

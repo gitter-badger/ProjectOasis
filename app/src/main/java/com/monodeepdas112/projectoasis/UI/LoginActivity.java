@@ -1,6 +1,7 @@
 package com.monodeepdas112.projectoasis.UI;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -25,11 +26,6 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity implements MyCommonUISetUp,View.OnClickListener {
 
-    private static final int WRONG_CREDENTIALS = 1;
-    private static final int NO_INTERNET = 2;
-    private static final String MSG_NO_INTERNET = "NO INTERNET";
-    private static final String MSG_WRONG_CREDENTIALS = "WRONG CREDENTIALS";
-
 
     TextInputLayout emailWrapper,passwordWrapper;
     Button loginButton,forgotButton;
@@ -38,16 +34,17 @@ public class LoginActivity extends AppCompatActivity implements MyCommonUISetUp,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         setUpUI();
     }
 
     @Override
     public void setUpUI() {
+        setContentView(R.layout.activity_login);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.activity_login_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         emailWrapper =(TextInputLayout)findViewById(R.id.usernameWrapper);
         passwordWrapper=(TextInputLayout)findViewById(R.id.passwordWrapper);
         loginButton=(Button)findViewById(R.id.loginButton);
@@ -99,15 +96,7 @@ public class LoginActivity extends AppCompatActivity implements MyCommonUISetUp,
                 passwordWrapper.setErrorEnabled(false);
                 switch (validateUIForms()){
                     case FORM_DETAILS_VALID:
-                        if (authenticateDetails()){
-                            // TODO task if email/password is valid
-                        }else {
-                            // mapping the wrong credentials but need to know about no internet
-                            // 3 outputs to map 1- successful login 2-wrong credentials 3-no-internet ask
-                            // state in the function configureSnackbar below can be passed as per cases
-                            // here wrong credentials
-                            configureSnackbar(v,WRONG_CREDENTIALS,MSG_WRONG_CREDENTIALS);
-                        }
+
                         break;
                     case EMAIL_EMPTY:
                         emailWrapper.setError(getString(R.string.activity_login_email_error));
@@ -120,12 +109,10 @@ public class LoginActivity extends AppCompatActivity implements MyCommonUISetUp,
                     case PASSWORD_INVALID:
                         passwordWrapper.setError(getString(R.string.activity_login_password_error));
                         passwordWrapper.requestFocus();
-                        configureSnackbar(v,WRONG_CREDENTIALS,"Password must be between 8 - 12 charaters long");
                 }
                 break;
             case R.id.forgotButton:
-                Toast.makeText(getApplicationContext(),"Forgot button working properly",
-                        Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(),ForgotPasswordActivity.class));
                 break;
         }
     }
@@ -136,20 +123,6 @@ public class LoginActivity extends AppCompatActivity implements MyCommonUISetUp,
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
                     hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
-    }
-
-    private void configureSnackbar(View v,int state,String message){
-        final Snackbar snackbar = Snackbar.make(v,message,Snackbar.LENGTH_LONG);
-        View view=snackbar.getView();
-        TextView tv= (TextView)view.findViewById(android.support.design.R.id.snackbar_text);
-        switch (state){
-            case WRONG_CREDENTIALS:
-                tv.setTextColor(getResources().getColor(R.color.contrastColor));
-                break;
-            case NO_INTERNET:
-                tv.setTextColor(getResources().getColor(R.color.cardBackground));
-        }
-        snackbar.show();
     }
 
     private boolean authenticateDetails() {
